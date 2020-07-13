@@ -4,7 +4,12 @@
   "description": "AngelHack 2020 job-comming api",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -w app.js",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}' --quiet",
+    "lint:fix": "yarn lint --fix",
+    "format": "prettier --check 'src/**/*.{js,jsx,ts,tsx}'",
+    "format:write": "yarn format --write"
   },
   "repository": {
     "type": "git",
@@ -25,9 +30,16 @@
     "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.10.4",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-import": "^1.13.0",
     "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
+    "nodemon": "^2.0.4",
     "prettier": "^2.0.5"
   }
 }
