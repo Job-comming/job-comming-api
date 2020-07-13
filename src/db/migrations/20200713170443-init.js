@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Users', {
@@ -9,7 +10,21 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userid: {
-        type: Sequelize.STRING
+        type: Sequelize.CHAR(60),
+        allowNull: false,
+        unique: true
+      },
+      hash: {
+        type: Sequelize.CHAR(60),
+        allowNULL: false,
+      },
+      salt: {
+        type: Sequelize.CHAR(30),
+        allowNULL: false,
+      },
+      reputation: {
+        type: Sequelize.INTEGER,
+        allowNULL: false,
       },
       createdAt: {
         allowNull: false,
@@ -19,9 +34,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
+
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Users')
   }
 };
