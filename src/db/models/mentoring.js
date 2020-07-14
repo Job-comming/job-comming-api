@@ -1,28 +1,36 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('mentoring', {
+    return sequelize.define('Mentorings', {
         id: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
-            type: Sequelize.INTEGER
+            type: DataTypes.INTEGER
         },
         category: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNULL: false
         },
+        mentor_id: {
+            type: DataTypes.CHAR(60),
+            allowNull: false,
+        },
+        mentee_id: {
+            type: DataTypes.CHAR(60),
+            allowNull: false,
+        },
         description: {
-            type: Sequelize.TEXT,
+            type: DataTypes.TEXT,
             allowNULL: true,
         },
         createdAt: {
             allowNull: false,
-            type: Sequelize.DATE
+            type: DataTypes.DATE
         },
         updatedAt: {
             allowNull: false,
-            type: Sequelize.DATE
+            type: DataTypes.DATE
         }
     }, {
         timestamps: false,
-    })
+    });
 }

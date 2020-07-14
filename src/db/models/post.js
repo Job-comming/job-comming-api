@@ -1,45 +1,47 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('post', {
+    const Posts = sequelize.define('Posts', {
         id: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
-            type: Sequelize.INTEGER
+            type: DataTypes.INTEGER
         },
         writer_id: {
-            type: Sequelize.CHAR(60),
-            references: {
-                model: {
-                    tableName: 'Users'
-                },
-                key: 'userid'
-            },
+            type: DataTypes.CHAR(60),
             allowNull: false,
         },
         title: {
-            type: Sequelize.STRING
+            type: DataTypes.STRING
         },
         option: {
-            type: Sequelize.TINYINT,
+            type: DataTypes.TINYINT,
             allowNULL: false,
         },
         content: {
-            type: Sequelize.TEXT,
+            type: DataTypes.TEXT,
             allowNULL: false,
         },
         category: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNULL: false,
         },
         createdAt: {
             allowNull: false,
-            type: Sequelize.DATE
+            type: DataTypes.DATE
         },
         updatedAt: {
             allowNull: false,
-            type: Sequelize.DATE
+            type: DataTypes.DATE
         }
     }, {
         timestamps: false,
-    })
+    });
+    Posts.associate = (models) => {
+        Posts.belongsTo(models.Users, {
+            foreignKey: 'writer_id',
+            targetKey: 'userid',
+            onDelete: 'cascade',
+        })
+    };
+    return Posts
 }

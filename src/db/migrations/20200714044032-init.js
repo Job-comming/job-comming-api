@@ -14,6 +14,10 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      username: {
+        type: Sequelize.STRING,
+        allowNULL: false,
+      },
       hash: {
         type: Sequelize.CHAR(60),
         allowNULL: false,
@@ -25,6 +29,7 @@ module.exports = {
       reputation: {
         type: Sequelize.INTEGER,
         allowNULL: false,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,

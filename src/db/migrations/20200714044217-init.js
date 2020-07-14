@@ -13,6 +13,22 @@ module.exports = {
         type: Sequelize.STRING,
         allowNULL: false
       },
+      mentor_id: {
+        type: Sequelize.CHAR(60),
+        references: {
+          model: 'Users',
+          key: 'userid'
+        },
+        allowNull: false,
+      },
+      mentee_id: {
+        type: Sequelize.CHAR(60),
+        references: {
+          model: 'Users',
+          key: 'userid'
+        },
+        allowNull: false,
+      },
       description: {
         type: Sequelize.TEXT,
         allowNULL: true,

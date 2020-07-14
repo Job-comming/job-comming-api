@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('user', {
+    const Users = sequelize.define('Users', {
         id: {
             allowNull: false,
             autoIncrement: true,
@@ -38,5 +38,12 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {
         timestamps: false,
-    })
+    });
+    Users.associate = (models) => {
+        models.Users.hasMany(models.Posts, {
+            foreignKey: 'writer_id',
+            onDelete: 'cascade'
+        })
+    };
+    return Users
 }

@@ -11,10 +11,9 @@ module.exports = {
       },
       writer_id: {
         type: Sequelize.CHAR(60),
+        onDelete: 'cascade',
         references: {
-          model: {
-            tableName: 'Users'
-          },
+          model: 'Users',
           key: 'userid'
         },
         allowNull: false,
