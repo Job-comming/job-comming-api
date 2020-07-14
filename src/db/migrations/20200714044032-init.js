@@ -9,7 +9,26 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       userid: {
+        type: Sequelize.CHAR(60),
+        allowNull: false,
+        unique: true
+      },
+      username: {
         type: Sequelize.STRING,
+        allowNULL: false,
+      },
+      hash: {
+        type: Sequelize.CHAR(60),
+        allowNULL: false,
+      },
+      salt: {
+        type: Sequelize.CHAR(30),
+        allowNULL: false,
+      },
+      reputation: {
+        type: Sequelize.INTEGER,
+        allowNULL: false,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,
