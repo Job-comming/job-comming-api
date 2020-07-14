@@ -1,15 +1,17 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
+require('dotenv').config();
+
+const db = require("./src/db/models");
+// sequelize.sync();
+
+const apiUser = require("./api/user")
+const apiPost = require("./api/post")
+
+apiUser(app, db)
+
 const port = 3000
-
-const sequelize = require('./models/index').sequelize;
-sequelize.sync();
-
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('Hello World!~'))
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
-
-// router
-app.use('/api/user', require('./router/user').user);
-app.use('/api/post', require('./router/post').post);
 
 module.exports = app;
