@@ -9,29 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      mentor: {
-        type: Sequelize.CHAR(60),
-        references: {
-          model: {
-            tableName: 'Users'
-          },
-          key: 'userid'
-        },
-        allowNull: false,
-      },
-      mentee: {
-        type: Sequelize.CHAR(60),
-        references: {
-          model: {
-            tableName: 'Users'
-          },
-          key: 'userid'
-        },
-        allowNull: false,
-      },
       category: {
         type: Sequelize.STRING,
         allowNULL: false
+      },
+      description: {
+        type: Sequelize.TEXT,
+        allowNULL: true,
       },
       createdAt: {
         allowNull: false,
@@ -45,6 +29,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Mentorings')
+    await queryInterface.dropTable('Mentorings');
   }
 };
