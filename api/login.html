@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Google Login Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h3>Google Login Test</h3>
+        <button type="submit">Login</button>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        // Login 버튼이 클릭되면
+        $("button").click((e) => {
+            window.location.href = '/auth/google';
+            return false;
+        });
+    </script>
+</body>
+
+</html>

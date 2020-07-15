@@ -1,5 +1,5 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const sequelize = require("../src/db/models");
+const { Auths } = require("../src/db/models");
 require('dotenv').config();
 
 module.exports = (passport) => {
@@ -8,16 +8,23 @@ module.exports = (passport) => {
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: 'http://localhost:3000/auth/google/callback'
     }, async (accessToken, refreshToken, profile, cb) => {
+        console.log('profile id:', profile.id);
         try {
-            const user = await sequelize.Auths.findOne({ googleId: profile.id });
+            const user = await Auths.findOne({ googleId: profile.id });
             if (user) {
-                const googleUser = {
-                    accessToken: accessToken,
-                    user: profile
-                }
-                return cb(null, googleUser);
+                console.log(user);
+                // const googleUser = {
+                //     accessToken: accessToken,
+                //     user: profile
+                // }
+                return cb(null, user);
             } else {
-                console.log('LOGIN NOT POSSIBLE');
+                console.log('회원가입이 필요합니다.');
+                console.log(profile);
+                const user = await Auths.create({
+                    googleId: profile.id
+                })
+                return cb(null, user);
             }
         } catch (err) {
             console.log('ERROR:', err)

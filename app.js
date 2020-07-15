@@ -10,24 +10,24 @@ passportConfig(passport);
 
 app.set('port', process.env.PORT || 3000);
 
-app.use(
-    session({
-        name: 'jobcoming', // 쿠키에 저장될 세션키 이름
-        secret: process.env.COOKIE_SECRET, // 세션 암호화를 위한 시크릿 
-        resave: true,
-        saveUninitialize: true,
-    })
-);
+app.use(session({
+    secret: process.env.COOKIE_SECRET, // 세션 암호화를 위한 시크릿키
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        secure: false
+    }
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// api (다른파일로 옮기기)
+// api
 const apiAuth = require("./api/auth");
 apiAuth(app, passport);
-// app.use('/', require('/api/index'));
 app.use('/api/user', require('./api/user'));
-app.use('/post', require('/api/post'));
+app.use('/api/post', require('./api/post'));
 
 app.get('/loginFailure', (req, res) => {
     res.send('Login Failed! :(');

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('Mentorings', {
+    const Mentorings = sequelize.define('Mentorings', {
         id: {
             allowNull: false,
             autoIncrement: true,
@@ -33,4 +33,17 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: false,
     });
+    Mentorings.associate = (models) => {
+        Mentorings.belongsTo(models.Users, {
+            foreignKey: 'mentor_id',
+            targetKey: 'userid',
+            onDelete: 'cascade',
+        });
+        Mentorings.belongsTo(models.Users, {
+            foreignKey: 'mentee_id',
+            targetKey: 'userid',
+            onDelete: 'cascade',
+        });
+    };
+    return Mentorings
 }
