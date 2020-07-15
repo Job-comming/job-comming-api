@@ -11,6 +11,7 @@ module.exports = {
       },
       googleId: {
         type: Sequelize.STRING,
+        unique: true,
         allowNULL: false
       }
     })
