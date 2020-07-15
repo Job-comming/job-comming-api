@@ -17,14 +17,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNULL: false,
       },
-      hash: {
-        type: Sequelize.CHAR(60),
-        allowNULL: false,
-      },
-      salt: {
-        type: Sequelize.CHAR(30),
-        allowNULL: false,
-      },
       reputation: {
         type: Sequelize.INTEGER,
         allowNULL: false,
