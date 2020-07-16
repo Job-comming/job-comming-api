@@ -5,11 +5,19 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon -w app.js",
+    "build": "tsc",
+    "dev": "DOTENV_CONFIG_PATH=./.env TS_NODE_TRANSPILE_ONLY=true nodemon -e ts -w src -r dotenv/config src/entry.ts",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}' --quiet",
     "lint:fix": "yarn lint --fix",
     "format": "prettier --check 'src/**/*.{js,jsx,ts,tsx}'",
-    "format:write": "yarn format --write"
+    "format:write": "yarn format --write",
+    "db-create-migration": "ts-node scripts/db-create-migration.ts",
+    "run-sequelize": "DOTENV_CONFIG_PATH=./.env node -r dotenv/config $(which sequelize)",
+    "migrate": "yarn run-sequelize db:migrate",
+    "migrate-undo": "yarn run-sequelize db:migrate:undo",
+    "db-migrate": "yarn sequelize db:migrate",
+    "db-migrate-undo": "yarn sequelize db:migrate:undo",
+    "db-migrate-test": "NODE_ENV=test yarn db-migrate"
   },
   "repository": {
     "type": "git",
@@ -22,18 +30,37 @@
   },
   "homepage": "https://github.com/Job-comming/job-comming-api#readme",
   "dependencies": {
+    "@types/express": "^4.17.7",
+    "@types/express-session": "^1.17.0",
+    "@types/lodash": "^4.14.157",
+    "@types/passport": "^1.0.4",
+    "@types/passport-google-oauth20": "^2.0.3",
     "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "date-fns": "^2.14.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mysql": "^2.18.1",
+    "express-handle-rejection": "^0.1.1",
+    "express-session": "^1.17.1",
+    "lazy-get": "^0.1.1",
+    "lodash": "^4.17.19",
     "mysql2": "^2.1.0",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
     "sequelize": "^6.3.3",
     "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.10.5",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
     "babel-eslint": "^10.1.0",
     "babel-plugin-import": "^1.13.0",
+    "env-var-fp": "^1.0.0",
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
@@ -41,7 +68,9 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "nodemon": "^2.0.4",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
   },
   "husky": {
     "hooks": {

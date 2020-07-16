@@ -1,4 +1,4 @@
 {
-  "*.{js}": ["yarn lint:fix", "git add"],
-  "*.{js,json,md}": ["yarn format:write", "git add"]
+  "*.{js,jsx,ts,tsx}": ["yarn lint:fix", "git add"],
+  "{*.{json,md}}": ["prettier --write", "git add"]
 }
