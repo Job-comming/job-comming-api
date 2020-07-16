@@ -9,14 +9,24 @@ module.exports = (sequelize, DataTypes) => {
         googleId: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        createdAt: {
+            allowNull: false,
+            type: DataTypes.DATE,
+            defaultValue: new Date()
+        },
+        updatedAt: {
+            allowNull: false,
+            type: DataTypes.DATE,
+            defaultValue: new Date()
         }
     }, {
         timestamps: false,
     });
     Auths.associate = (models) => {
-        Auths.belongsTo(models.Users, {
+        Auths.hasOne(models.Users, {
             foreignKey: 'googleId',
-            targetKey: 'userid',
+            targetKey: 'userId',
             onDelete: 'cascade',
         })
     };

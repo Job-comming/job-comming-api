@@ -1,26 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define('Users', {
-        id: {
-            allowNull: false,
-            autoIncrement: true,
+        // id: {
+        //     allowNull: false,
+        //     autoIncrement: true,
+        //     primaryKey: true,
+        //     type: DataTypes.INTEGER
+        // },
+        userId: {
+            type: DataTypes.STRING,
             primaryKey: true,
-            type: DataTypes.INTEGER
-        },
-        userid: {
-            type: DataTypes.CHAR(60),
             allowNull: false,
-            unique: true
         },
         username: {
             type: DataTypes.STRING,
-            allowNULL: false,
-        },
-        hash: {
-            type: DataTypes.CHAR(60),
-            allowNULL: false,
-        },
-        salt: {
-            type: DataTypes.CHAR(30),
             allowNULL: false,
         },
         reputation: {
@@ -28,22 +20,33 @@ module.exports = (sequelize, DataTypes) => {
             allowNULL: false,
             defaultValue: 0
         },
+        deposit: {
+            type: DataTypes.INTEGER,
+            allowNULL: false,
+            defaultValue: 0
+        },
         createdAt: {
             allowNull: false,
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            defaultValue: new Date()
         },
         updatedAt: {
             allowNull: false,
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            defaultValue: new Date()
         }
     }, {
         timestamps: false,
     });
     Users.associate = (models) => {
         models.Users.hasMany(models.Posts, {
-            foreignKey: 'writer_id',
+            foreignKey: 'writerId',
             onDelete: 'cascade'
-        })
+        });
+        models.Users.hasMany(models.Mentorings, {
+            foreignKey: 'id',
+            onDelete: 'cascade'
+        });
     };
     return Users
 }

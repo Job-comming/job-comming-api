@@ -3,71 +3,81 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Users', [{
-      userid: 'id0',
-      reputation: '0',
+      userId: 'id0',
+      reputation: 0,
       username: '멘토0',
+      deposit: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      userid: 'id1',
-      reputation: '0',
+      userId: 'id1',
+      reputation: 0,
       username: '멘티0',
+      deposit: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      userid: 'id2',
-      reputation: '0',
+      userId: 'id2',
+      reputation: 0,
       username: '멘토1',
+      deposit: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      userid: 'id3',
-      reputation: '0',
+      userId: 'id3',
+      reputation: 0,
       username: '멘토2',
+      deposit: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      userid: 'id4',
-      reputation: '0',
+      userId: 'id4',
+      reputation: 0,
       username: '멘토3',
+      deposit: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      userid: 'id5',
-      reputation: '0',
+      userId: 'id5',
+      reputation: 0,
       username: '멘티0',
+      deposit: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      userid: 'id6',
-      reputation: '0',
+      userId: 'id6',
+      reputation: 0,
       username: '멘티1',
+      deposit: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      userid: 'id7',
-      reputation: '0',
+      userId: 'id7',
+      reputation: 0,
       username: '멘티2',
+      deposit: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      userid: 'id8',
-      reputation: '0',
+      userId: 'id8',
+      reputation: 0,
       username: '멘티3',
+      deposit: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      userid: 'id9',
-      reputation: '0',
+      userId: 'id9',
+      reputation: 0,
       username: '멘티4',
+      deposit: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     }]);

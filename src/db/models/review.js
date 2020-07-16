@@ -1,28 +1,29 @@
 module.exports = (sequelize, DataTypes) => {
-    const Posts = sequelize.define('Posts', {
+    const Reviews = sequelize.define('Reviews', {
         id: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
             type: DataTypes.INTEGER
         },
-        writerId: {
-            type: DataTypes.STRING,
+        mentoringId: {
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
-        title: {
-            type: DataTypes.STRING
+        senderId: {
+            type: DataTypes.STRING,
+            allowNULL: false
         },
-        option: {
-            type: DataTypes.TINYINT,
+        receiverId: {
+            type: DataTypes.STRING,
             allowNULL: false,
         },
-        content: {
+        comment: {
             type: DataTypes.TEXT,
             allowNULL: false,
         },
-        category: {
-            type: DataTypes.STRING,
+        starRate: {
+            type: DataTypes.INTEGER,
             allowNULL: false,
         },
         createdAt: {
@@ -38,12 +39,12 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: false,
     });
-    Posts.associate = (models) => {
-        Posts.belongsTo(models.Users, {
-            foreignKey: 'writerId',
-            targetKey: 'userId',
+    Reviews.associate = (models) => {
+        Reviews.belongsTo(models.Mentorings, {
+            foreignKey: 'mentoringId',
+            targetKey: 'id',
             onDelete: 'cascade',
-        })
+        });
     };
-    return Posts
+    return Reviews
 }

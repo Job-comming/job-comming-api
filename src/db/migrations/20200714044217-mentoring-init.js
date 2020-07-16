@@ -13,33 +13,42 @@ module.exports = {
         type: Sequelize.STRING,
         allowNULL: false
       },
-      mentor_id: {
-        type: Sequelize.CHAR(60),
+      mentorId: {
+        type: Sequelize.STRING,
         references: {
           model: 'Users',
-          key: 'userid'
+          key: 'userId'
         },
+        onDelete: 'cascade',
         allowNull: false,
       },
-      mentee_id: {
-        type: Sequelize.CHAR(60),
+      menteeId: {
+        type: Sequelize.STRING,
         references: {
           model: 'Users',
-          key: 'userid'
+          key: 'userId'
         },
+        onDelete: 'cascade',
         allowNull: false,
       },
       description: {
         type: Sequelize.TEXT,
         allowNULL: true,
       },
+      finished: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNULL: false
+      },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: new Date()
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: new Date()
       }
     })
   },

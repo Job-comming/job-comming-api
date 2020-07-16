@@ -10,38 +10,45 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNULL: false
         },
-        mentor_id: {
-            type: DataTypes.CHAR(60),
+        mentorId: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        mentee_id: {
-            type: DataTypes.CHAR(60),
+        menteeId: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
         description: {
             type: DataTypes.TEXT,
             allowNULL: true,
         },
+        finished: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNULL: false
+        },
         createdAt: {
             allowNull: false,
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            defaultValue: new Date()
         },
         updatedAt: {
             allowNull: false,
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            defaultValue: new Date()
         }
     }, {
         timestamps: false,
     });
     Mentorings.associate = (models) => {
         Mentorings.belongsTo(models.Users, {
-            foreignKey: 'mentor_id',
-            targetKey: 'userid',
+            foreignKey: 'mentorId',
+            targetKey: 'userId',
             onDelete: 'cascade',
         });
         Mentorings.belongsTo(models.Users, {
-            foreignKey: 'mentee_id',
-            targetKey: 'userid',
+            foreignKey: 'menteeId',
+            targetKey: 'userId',
             onDelete: 'cascade',
         });
     };

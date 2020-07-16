@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Posts', [{
-      writer_id: 'id0',
+      writerId: 'id0',
       title: '멘티 게 있느냐',
       option: 1,
       content: '이리오너라 업고놀자',
@@ -12,7 +12,7 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      writer_id: 'id5',
+      writerId: 'id5',
       title: '멘토님을 뫼시옵니다',
       option: 0,
       content: '황공하옵니다',
@@ -21,7 +21,7 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      writer_id: 'id1',
+      writerId: 'id1',
       title: '멘티를 찾습니다 !',
       option: 1,
       content: '리액트 가르쳐드려요',
@@ -30,7 +30,7 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      writer_id: 'id6',
+      writerId: 'id6',
       title: '웹 프론트엔드 가르쳐주세요',
       option: 0,
       content: '리액트 배우고싶어요',

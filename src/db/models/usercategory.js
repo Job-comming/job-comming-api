@@ -1,28 +1,21 @@
 module.exports = (sequelize, DataTypes) => {
-    const Posts = sequelize.define('Posts', {
+    const UserCategories = sequelize.define('UserCategories', {
         id: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
             type: DataTypes.INTEGER
         },
-        writerId: {
+        userId: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        title: {
-            type: DataTypes.STRING
-        },
-        option: {
-            type: DataTypes.TINYINT,
-            allowNULL: false,
-        },
-        content: {
-            type: DataTypes.TEXT,
-            allowNULL: false,
-        },
         category: {
             type: DataTypes.STRING,
+            allowNULL: false
+        },
+        level: {
+            type: DataTypes.INTEGER,
             allowNULL: false,
         },
         createdAt: {
@@ -38,12 +31,15 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: false,
     });
-    Posts.associate = (models) => {
-        Posts.belongsTo(models.Users, {
-            foreignKey: 'writerId',
+    UserCategories.associate = (models) => {
+        UserCategories.belongsTo(models.Users, {
+            foreignKey: 'userId',
             targetKey: 'userId',
             onDelete: 'cascade',
-        })
+        });
+        UserCategories.hasOne(models.Users, {
+            foreignKey: userId
+        });
     };
-    return Posts
+    return UserCategories
 }

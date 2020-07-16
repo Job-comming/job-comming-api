@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Google Login Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h3>Google Login Test</h3>
+        <form method="POST" action="/api/user">
+            <label for="username">username:</label><br>
+            <input type="text" id="fname" name="fname"><br>
+            <label for="category1">category1:</label><br>
+            <input type="text" id="lname" name="lname">
+            <label for="level1">level:</label><br>
+            <input type="text" id="lname" name="lname">
+            <label for="category2">category2:</label><br>
+            <input type="text" id="lname" name="lname">
+            <label for="level2">level:</label><br>
+            <input type="text" id="lname" name="lname">
+            <button type="submit">Sign up</button>
+        </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        // $("form").submit((e) => {
+        //     window.location.href = '/api/user';
+        //     return false;
+        // });
+    </script>
+</body>
+
+</html>

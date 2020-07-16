@@ -8,12 +8,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      writer_id: {
-        type: Sequelize.CHAR(60),
+      writerId: {
+        type: Sequelize.STRING,
         onDelete: 'cascade',
         references: {
           model: 'Users',
-          key: 'userid'
+          key: 'userId'
         },
         allowNull: false,
       },
@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       option: {
-        type: Sequelize.TINYINT,
+        type: Sequelize.BOOLEAN,
         allowNULL: false,
       },
       content: {
@@ -35,10 +35,12 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: new Date()
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: new Date()
       },
     })
   },

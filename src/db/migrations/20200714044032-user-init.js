@@ -2,16 +2,21 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Users', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
+      // id: {
+      //   allowNull: false,
+      //   autoIncrement: true,
+      //   primaryKey: true,
+      //   type: Sequelize.INTEGER,
+      // },
+      userId: {
+        type: Sequelize.STRING,
         primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      userid: {
-        type: Sequelize.CHAR(60),
         allowNull: false,
-        unique: true
+        onDelete: 'cascade',
+        references: {
+          model: 'Auths',
+          key: 'googleId'
+        },
       },
       username: {
         type: Sequelize.STRING,
@@ -22,13 +27,20 @@ module.exports = {
         allowNULL: false,
         defaultValue: 0
       },
+      deposit: {
+        type: Sequelize.INTEGER,
+        allowNULL: false,
+        defaultValue: 0
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: new Date()
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: new Date()
       },
     })
   },

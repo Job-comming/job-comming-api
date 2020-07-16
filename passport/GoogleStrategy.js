@@ -10,17 +10,16 @@ module.exports = (passport) => {
     }, async (accessToken, refreshToken, profile, cb) => {
         console.log('profile id:', profile.id);
         try {
-            const user = await Auths.findOne({ googleId: profile.id });
-            if (user) {
-                console.log(user);
-                // const googleUser = {
-                //     accessToken: accessToken,
-                //     user: profile
-                // }
+            const user = await Auths.findAll({
+                where: {
+                    googleId: profile.id
+                },
+                limit: 1
+            });
+            if (user.length != 0) {
                 return cb(null, user);
             } else {
                 console.log('회원가입이 필요합니다.');
-                console.log(profile);
                 const user = await Auths.create({
                     googleId: profile.id
                 })

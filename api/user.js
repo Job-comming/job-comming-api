@@ -1,31 +1,76 @@
 const express = require('express');
 const router = express.Router();
-const { Users, Mentorings } = require("../src/db/models");
+const { Users, UserCategories, Sequelize: { Op }, sequelize } = require("../src/db/models");
+// const { Op } = require("sequelize");
 
-router.get('/', async (req, res) => {
-    const users = await Users.findAll();
-    res.json(users);
+router.get('/', (req, res, next) => {
+    Users.findAll()
+        .then((users) => {
+            res.json(users);
+        }).catch((err) => {
+            console.log(err);
+            next(err);
+        });
 })
-
-router.get('/:userid', async (req, res) => {
+router.get('/userid/:userid', (req, res) => {
+    // if (!req.user)
     console.log('userid:', req.params.userid);
-    const user = await Users.findAll({
+    Users.findAll({
         where: {
-            userid: req.params.userid
-        }
-    })
-    res.json(user);
+            userId: req.params.userid
+        },
+        limit: 1
+    }).then((user) => {
+        res.json(user);
+    }).catch((err) => {
+        res.send(err);
+    });
 })
-
-router.get('/:userid/:mentoring', async (req, res) => {
-    console.log('userid:', req.params.userid);
-    console.log('mentoring:', req.params.mentoring);
-    const user = await Users.findAll({
-        where: {
-            userid: req.params.userid
+router.get('/check', async (req, res) => {
+    try {
+        console.log('세션:', req.user);
+        const user = await Users.findAll({
+            where: {
+                userId: req.user[0].googleId
+            },
+            limit: 1
+        })
+        console.log('유저:', user);
+        if (user.length != 0) {
+            res.sendFile(__dirname + '/mypage.html');
+        } else {
+            res.sendFile(__dirname + '/signup.html');
         }
-    })
-    res.json(user);
+    } catch (err) {
+        console.log(err);
+    }
+})
+router.post('/', async (req, res) => {
+    const { userid, username, reputation, deposit, category1, level1, category2, level2 } = req.body;
+    try {
+        await sequelize.transaction(async (t) => {
+            await Users.create({
+                userId: userid,
+                username: username,
+                reputation: 0 || reputation,
+                deposit: 0 || deposit,
+            }, { transaction: t });
+            await UserCategories.create({
+                userId: userid,
+                category: category1,
+                level: level1
+            }, { transaction: t });
+            await UserCategories.create({
+                userId: userid,
+                category: category2,
+                level: level2
+            }, { transaction: t });
+        });
+
+        return res.send('User successfully added');
+    } catch (err) {
+        console.log(err);
+    }
 })
 
 module.exports = router;

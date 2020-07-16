@@ -12,7 +12,17 @@ module.exports = {
       googleId: {
         type: Sequelize.STRING,
         unique: true,
-        allowNULL: false
+        allowNULL: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: new Date()
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: new Date()
       }
     })
   },

@@ -20,12 +20,15 @@ app.use(session({
     }
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // api
-const apiAuth = require("./api/auth");
-apiAuth(app, passport);
+// const apiAuth = require("./api/auth");
+// apiAuth(app, passport);
+app.use('/', require('./api/auth'));
 app.use('/api/user', require('./api/user'));
 app.use('/api/post', require('./api/post'));
 
