@@ -24,12 +24,10 @@ export default {
         },
         createdAt: {
           type: DataTypes.DATE,
-          allowNull: false,
           field: 'created_at',
         },
         updatedAt: {
           type: DataTypes.DATE,
-          allowNull: false,
           field: 'updated_at',
         },
       },
@@ -71,11 +69,11 @@ export default {
         },
         createdAt: {
           type: DataTypes.DATE,
-          allowNull: false,
+          field: 'created_at',
         },
         updatedAt: {
           type: DataTypes.DATE,
-          allowNull: false,
+          field: 'updated_at',
         },
       },
       { transaction },
@@ -116,12 +114,12 @@ export default {
           allowNull: true,
         },
         createdAt: {
-          allowNull: false,
           type: DataTypes.DATE,
+          field: 'created_at',
         },
         updatedAt: {
-          allowNull: false,
           type: DataTypes.DATE,
+          field: 'updated_at',
         },
       },
       { transaction },
@@ -147,7 +145,7 @@ export default {
         userID: {
           type: DataTypes.INTEGER,
           allowNull: false,
-          field: 'id',
+          field: 'user_id',
         },
         createdAt: {
           type: DataTypes.DATE,

@@ -30,12 +30,10 @@ export function init(sequelize: Sequelize) {
       },
       createdAt: {
         type: DataTypes.DATE,
-        allowNull: false,
         field: 'created_at',
       },
       updatedAt: {
         type: DataTypes.DATE,
-        allowNull: false,
         field: 'updated_at',
       },
     },

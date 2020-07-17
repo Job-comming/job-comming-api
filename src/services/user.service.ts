@@ -22,24 +22,6 @@ export class UserService {
     return this.buildUser(model)
   }
 
-  public async getUserByAuthUserID(authUserID: number) {
-    if (!authUserID) {
-      return null
-    }
-
-    const model = await UserModel.findOne({
-      where: {
-        authUserID,
-      },
-    })
-
-    if (!model) {
-      return null
-    }
-
-    return this.buildUser(model)
-  }
-
   public async createUser(input: UserCreateInput) {
     const model = await UserModel.create(input)
     return this.buildUser(model)

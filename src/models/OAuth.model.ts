@@ -43,7 +43,7 @@ export function init(sequelize: Sequelize) {
     },
     {
       sequelize,
-      tableName: 'user_useroauthlogin',
+      tableName: 'oauth',
       createdAt: 'created_at',
       updatedAt: 'updated_at',
     },

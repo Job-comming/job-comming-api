@@ -45,12 +45,12 @@ export function init(sequelize: Sequelize) {
         allowNull: true,
       },
       createdAt: {
-        allowNull: false,
         type: DataTypes.DATE,
+        field: 'created_at',
       },
       updatedAt: {
-        allowNull: false,
         type: DataTypes.DATE,
+        field: 'updated_at',
       },
     },
     {

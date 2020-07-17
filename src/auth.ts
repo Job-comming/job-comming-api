@@ -1,7 +1,7 @@
 import { UserModel } from './models'
 
 export async function getUserFromSession(session: Express.Session) {
-  if (!session.userID) {
+  if (!session?.userID) {
     return null
   }
 
