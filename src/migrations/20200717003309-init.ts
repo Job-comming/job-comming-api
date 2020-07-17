@@ -48,7 +48,7 @@ export default {
           type: DataTypes.CHAR(60),
           onDelete: 'cascade',
           references: {
-            model: 'users',
+            model: 'user',
             key: 'user_id',
           },
           allowNull: false,
