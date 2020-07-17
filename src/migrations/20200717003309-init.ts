@@ -49,7 +49,7 @@ export default {
           onDelete: 'cascade',
           references: {
             model: 'user',
-            key: 'user_id',
+            key: 'id',
           },
           allowNull: false,
           field: 'writer_id',
@@ -97,7 +97,7 @@ export default {
           type: DataTypes.CHAR(60),
           references: {
             model: 'user',
-            key: 'user_id',
+            key: 'id',
           },
           allowNull: false,
           field: 'mentor_id',
@@ -106,7 +106,7 @@ export default {
           type: DataTypes.CHAR(60),
           references: {
             model: 'user',
-            key: 'user_id',
+            key: 'id',
           },
           allowNull: false,
           field: 'mentee_id',
@@ -147,7 +147,7 @@ export default {
         userID: {
           type: DataTypes.INTEGER,
           allowNull: false,
-          field: 'user_id',
+          field: 'id',
         },
         createdAt: {
           type: DataTypes.DATE,
