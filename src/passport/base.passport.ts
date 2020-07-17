@@ -18,7 +18,7 @@ async function verify(
   const oauthUser = await oauthService.getOAuth(profile.serviceUserID, provider)
 
   if (oauthUser) {
-    const user = await userService.getUserByAuthUserID(oauthUser.userID)
+    const user = await userService.getUser(oauthUser.userID)
     return user
   }
 
