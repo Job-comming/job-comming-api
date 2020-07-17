@@ -60,6 +60,8 @@ async function init() {
 
   const app = express()
 
+  app.use(cors({ origin: true, credentials: true }))
+
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
 
@@ -80,7 +82,17 @@ async function init() {
   app.use(passportRouter)
 
   app.use(middleware)
-  app.use(cors({ origin: true, credentials: true }))
+
+  app.use(
+    ehr(async (req, res, next) => {
+      const userModel = await getUserFromSession(req.session)
+
+      // eslint-disable-next-line require-atomic-updates
+      req.context = new Context(sequelize, req, res, userModel)
+      next()
+    }),
+  )
+
   app.use(router)
 
   app.listen(PORT, () => {

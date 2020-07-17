@@ -6,7 +6,7 @@ import {
   createRouter as createGoogleRouter,
 } from './google.passport'
 
-export function initializePassport() {
+export const initializePassport = () => {
   const passport = new Passport()
 
   passport.serializeUser<UserModel, number>((user, callback) => {
@@ -29,7 +29,7 @@ export function initializePassport() {
   return passport
 }
 
-export function createPassportRouter(passport: passport.Authenticator) {
+export const createPassportRouter = (passport: passport.Authenticator) => {
   const router = Router()
 
   const googleRouter = createGoogleRouter(passport)

@@ -33,7 +33,7 @@ const verifyFunction: GoogleVerifyFunction = (
   const normalizedProfile: NormalizedProfile = {
     serviceUserID: profile.id,
     username: profile.displayName,
-    email: get(profile, '_jsn.email', ''),
+    email: get(profile, '_json.email', ''),
   }
 
   return verifyCallback(
