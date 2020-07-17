@@ -2,6 +2,7 @@ import express from 'express'
 import ehr from 'express-handle-rejection'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import MySQLStore from 'express-mysql-session'
 import { initializePassport, createPassportRouter } from './passport'
@@ -50,21 +51,11 @@ async function init() {
   const passport = initializePassport()
   const passportRouter = createPassportRouter(passport)
 
-  const middleware = ehr(async (req, res, next) => {
-    const userModel = await getUserFromSession(req.session)
-
-    // eslint-disable-next-line require-atomic-updates
-    req.context = new Context(sequelize, req, res, userModel)
-    next()
-  })
-
   const app = express()
-
-  app.use(cors({ origin: true, credentials: true }))
 
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
-
+  app.use(cookieParser())
   app.use(
     session({
       store: new SessionStore(MySQLOption),
@@ -79,9 +70,6 @@ async function init() {
   )
   app.use(passport.initialize())
   app.use(passport.session())
-  app.use(passportRouter)
-
-  app.use(middleware)
 
   app.use(
     ehr(async (req, res, next) => {
@@ -93,10 +81,13 @@ async function init() {
     }),
   )
 
+  app.use(cors({ origin: true, credentials: true }))
+
   app.use(router)
+  app.use(passportRouter)
 
   app.listen(PORT, () => {
-    console.log(`\n😻Listening at http://localhost:${PORT}\n`)
+    console.log(`\n😻 Listening at http://localhost:${PORT}\n`)
   })
 }
 

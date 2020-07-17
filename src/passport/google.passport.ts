@@ -65,9 +65,12 @@ export function createRouter(passport: passport.Authenticator) {
     })(req, res, next)
   })
 
-  router.get('/auth/google/callback', (req, res) => {
-    res.redirect(CLIENT_BASE_URL)
-  })
+  router.get(
+    '/auth/google/callback',
+    passport.authenticate('google', {
+      successRedirect: '/',
+    }),
+  )
 
   return router
 }
