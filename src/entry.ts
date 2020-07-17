@@ -1,4 +1,4 @@
-import express, { ErrorRequestHandler } from 'express'
+import express from 'express'
 import ehr from 'express-handle-rejection'
 import cors from 'cors'
 import {

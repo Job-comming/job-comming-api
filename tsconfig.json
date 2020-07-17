@@ -9,6 +9,7 @@
     "noUnusedLocals": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "outDir": "lib"
+    "outDir": "lib",
+    "baseUrl": "."
   }
 }
