@@ -20,11 +20,11 @@ export function init(sequelize: Sequelize) {
         primaryKey: true,
       },
       writerID: {
-        type: DataTypes.CHAR(60),
+        type: DataTypes.INTEGER,
         onDelete: 'cascade',
         references: {
           model: 'users',
-          key: 'user_id',
+          key: 'id',
         },
         allowNull: false,
         field: 'writer_id',

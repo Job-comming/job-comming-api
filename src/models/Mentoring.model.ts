@@ -23,19 +23,19 @@ export function init(sequelize: Sequelize) {
         allowNull: false,
       },
       mentorID: {
-        type: DataTypes.CHAR(60),
+        type: DataTypes.INTEGER,
         references: {
           model: 'user',
-          key: 'user_id',
+          key: 'id',
         },
         allowNull: false,
         field: 'mentor_id',
       },
       menteeID: {
-        type: DataTypes.CHAR(60),
+        type: DataTypes.INTEGER,
         references: {
           model: 'user',
-          key: 'user_id',
+          key: 'id',
         },
         allowNull: false,
         field: 'mentee_id',
