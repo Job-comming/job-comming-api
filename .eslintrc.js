@@ -2,7 +2,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
     'eslint:recommended',
-    'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
@@ -18,7 +17,7 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'import'],
+  plugins: ['@typescript-eslint', 'import'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -29,11 +28,6 @@ module.exports = {
   rules: {
     'no-empty-pattern': 'off',
     'no-prototype-builtins': 'off',
-    'react/jsx-key': 'off',
-    'react/prop-types': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 1,
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-empty-function': 'off',
