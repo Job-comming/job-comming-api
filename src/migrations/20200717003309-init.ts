@@ -45,7 +45,7 @@ export default {
           primaryKey: true,
         },
         writerID: {
-          type: DataTypes.CHAR(60),
+          type: DataTypes.INTEGER,
           onDelete: 'cascade',
           references: {
             model: 'user',
@@ -94,7 +94,7 @@ export default {
           allowNull: false,
         },
         mentorID: {
-          type: DataTypes.CHAR(60),
+          type: DataTypes.INTEGER,
           references: {
             model: 'user',
             key: 'id',
@@ -103,7 +103,7 @@ export default {
           field: 'mentor_id',
         },
         menteeID: {
-          type: DataTypes.CHAR(60),
+          type: DataTypes.INTEGER,
           references: {
             model: 'user',
             key: 'id',
