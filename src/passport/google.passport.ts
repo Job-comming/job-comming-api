@@ -35,6 +35,7 @@ const verifyFunction: GoogleVerifyFunction = (
     username: profile.displayName,
     email: get(profile, '_jsn.email', ''),
   }
+
   return verifyCallback(
     req.context,
     accessToken,
@@ -58,13 +59,13 @@ export const strategy = new GoogleStrategy(
 export function createRouter(passport: passport.Authenticator) {
   const router = express.Router()
 
-  router.get('auth/google', (req, res, next) => {
+  router.get('/auth/google', (req, res, next) => {
     passport.authenticate('google', {
-      scope: ['profile', 'email'],
+      scope: ['email', 'profile'],
     })(req, res, next)
   })
 
-  router.get('auth/google/callback', (req, res) => {
+  router.get('/auth/google/callback', (req, res) => {
     res.redirect(CLIENT_BASE_URL)
   })
 
