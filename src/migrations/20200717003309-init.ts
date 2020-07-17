@@ -11,23 +11,12 @@ export default {
           primaryKey: true,
           autoIncrement: true,
         },
-        userID: {
-          type: DataTypes.CHAR(60),
-          allowNull: false,
-          unique: true,
-          field: 'user_id',
-        },
         username: {
-          type: DataTypes.STRING,
+          type: DataTypes.STRING(32),
           allowNull: false,
         },
-        hash: {
-          type: DataTypes.CHAR(60),
-          allowNull: false,
-        },
-        salt: {
-          type: DataTypes.CHAR(30),
-          allowNull: false,
+        email: {
+          type: DataTypes.STRING(254),
         },
         reputation: {
           type: DataTypes.INTEGER,
@@ -137,11 +126,46 @@ export default {
       },
       { transaction },
     )
+
+    await queryInterface.createTable(
+      'oauth',
+      {
+        id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
+        service: {
+          type: DataTypes.STRING(12),
+          allowNull: false,
+        },
+        serviceUserID: {
+          type: DataTypes.STRING(64),
+          allowNull: false,
+          field: 'service_user_id',
+        },
+        userID: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          field: 'user_id',
+        },
+        createdAt: {
+          type: DataTypes.DATE,
+          field: 'created_at',
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
+          field: 'updated_at',
+        },
+      },
+      { transaction },
+    )
   }),
 
   down: transact(async (queryInterface, transaction) => {
     await queryInterface.dropTable('user', { transaction })
     await queryInterface.dropTable('post', { transaction })
     await queryInterface.dropTable('mentoring', { transaction })
+    await queryInterface.dropTable('oauth', { transaction })
   }),
 }

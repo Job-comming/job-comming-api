@@ -1,47 +1,49 @@
 import { Sequelize, Model, DataTypes } from 'sequelize'
+import { Provider } from '../types'
 
-export class UserModel extends Model {
+export class OAuthModel extends Model {
   public id: number
-  public username: string
-  public email: string
-  public reputation: number
+  public service: Provider
+  public serviceUserID: string
+  public userID: number
   public createdAt: Date
   public updatedAt: Date
 }
 
 export function init(sequelize: Sequelize) {
-  UserModel.init(
+  OAuthModel.init(
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      username: {
-        type: DataTypes.STRING(32),
+      service: {
+        type: DataTypes.STRING(12),
         allowNull: false,
       },
-      email: {
-        type: DataTypes.STRING(254),
+      serviceUserID: {
+        type: DataTypes.STRING(64),
+        allowNull: false,
+        field: 'service_user_id',
       },
-      reputation: {
+      userID: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        field: 'user_id',
       },
       createdAt: {
         type: DataTypes.DATE,
-        allowNull: false,
         field: 'created_at',
       },
       updatedAt: {
         type: DataTypes.DATE,
-        allowNull: false,
         field: 'updated_at',
       },
     },
     {
       sequelize,
-      tableName: 'user',
+      tableName: 'user_useroauthlogin',
       createdAt: 'created_at',
       updatedAt: 'updated_at',
     },

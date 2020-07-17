@@ -9,10 +9,39 @@ export class UserService {
   constructor(private dependencies: UserServiceDependencies) {}
 
   public async getUser(id: number) {
+    if (!id) {
+      return null
+    }
+
     const model = await UserModel.findByPk(id)
 
-    if (!model) return null
+    if (!model) {
+      return null
+    }
 
+    return this.buildUser(model)
+  }
+
+  public async getUserByAuthUserID(authUserID: number) {
+    if (!authUserID) {
+      return null
+    }
+
+    const model = await UserModel.findOne({
+      where: {
+        authUserID,
+      },
+    })
+
+    if (!model) {
+      return null
+    }
+
+    return this.buildUser(model)
+  }
+
+  public async createUser(input: UserCreateInput) {
+    const model = await UserModel.create(input)
     return this.buildUser(model)
   }
 
@@ -31,20 +60,12 @@ export class User {
     return this.model.id
   }
 
-  get userID() {
-    return this.model.userID
-  }
-
   get username() {
     return this.model.username
   }
 
-  get hash() {
-    return this.model.hash
-  }
-
-  get salt() {
-    return this.model.salt
+  get email() {
+    return this.model.email
   }
 
   get reputation() {
@@ -53,6 +74,10 @@ export class User {
 
   get createdAt() {
     return this.model.createdAt
+  }
+
+  get updatedAt() {
+    return this.model.updatedAt
   }
 
   // 내가 멘토인 방
@@ -68,4 +93,10 @@ export class User {
     const mentorings = await mentoringService.getMentoringByMenteeID(this.id)
     return mentorings
   }
+}
+
+export interface UserCreateInput {
+  username: string
+  email: string
+  reputation: number
 }
