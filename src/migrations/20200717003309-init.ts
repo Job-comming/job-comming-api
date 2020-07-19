@@ -195,7 +195,7 @@ export default {
   down: transact(async (queryInterface, transaction) => {
     await queryInterface.dropTable('auth_user', { transaction })
     await queryInterface.dropTable('user_info', { transaction })
-    await queryInterface.dropTable('post', { transaction })
+    await queryInterface.dropTable('feed', { transaction })
     await queryInterface.dropTable('mentoring', { transaction })
   }),
 }
