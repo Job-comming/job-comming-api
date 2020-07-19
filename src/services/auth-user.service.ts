@@ -75,7 +75,7 @@ export class AuthUser {
   }
 }
 
-export interface AuthUserCreateInput {
+interface AuthUserCreateInput {
   authUserID: string
   service: Provider
 }

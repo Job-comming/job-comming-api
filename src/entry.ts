@@ -9,7 +9,6 @@ import MySQLStore from 'express-mysql-session'
 import { initializePassport, createPassportRouter } from './passport'
 import {
   PORT,
-  DOMAIN,
   COOKIE_SECRET,
   MYSQL_USERNAME,
   MYSQL_PASSWORD,
@@ -83,8 +82,8 @@ async function init() {
     }),
   )
 
-  app.use(router)
   app.use(createPassportRouter(passport))
+  app.use(router)
 
   app.listen(PORT, () => {
     console.log(`\n😻 Listening at http://localhost:${PORT}\n`)

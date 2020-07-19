@@ -1,6 +1,6 @@
 import { Context } from '../context'
 import { AuthUser } from '../services/auth-user.service'
-import { Provider } from '../types'
+import { Provider, UserState } from '../types'
 
 export interface NormalizedProfile {
   serviceUserID: string
@@ -55,6 +55,7 @@ export async function verifyCallback(
       authUserID: authUser.id,
       username,
       email,
+      state: UserState.PENDING,
       reputation: 0,
     })
 

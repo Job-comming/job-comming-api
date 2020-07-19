@@ -1,5 +1,6 @@
 import { UserInfoModel } from '../models'
 import { MentoringService } from './mentoring.service'
+import { UserState } from '../types'
 
 export interface UserInfoServiceDependencies {
   mentoringService: MentoringService
@@ -54,8 +55,36 @@ export class UserInfo {
     return this.model.email
   }
 
+  get state() {
+    return this.model.state
+  }
+
+  get interest() {
+    return this.model.interest
+  }
+
+  get level() {
+    return this.model.level
+  }
+
   get reputation() {
     return this.model.reputation
+  }
+
+  get deposit() {
+    return this.model.deposit
+  }
+
+  get menteeCount() {
+    return this.model.menteeCount
+  }
+
+  get mentoCount() {
+    return this.model.mentoCount
+  }
+
+  get githubURL() {
+    return this.model.githubURL
   }
 
   get createdAt() {
@@ -85,5 +114,6 @@ export interface UserInfoCreateInput {
   authUserID: number
   username: string
   email: string
+  state: UserState
   reputation: number
 }

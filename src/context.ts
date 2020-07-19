@@ -10,13 +10,16 @@ import {
   UserInfoServiceDependencies,
   MentoringService,
   MentoringServiceDependencies,
+  FeedService,
+  FeedServiceDependencies,
 } from './services'
 
 export class Context
   implements
     AuthUserServiceDependencies,
     UserInfoServiceDependencies,
-    MentoringServiceDependencies {
+    MentoringServiceDependencies,
+    FeedServiceDependencies {
   @lazy get authUserService(): AuthUserService {
     return new AuthUserService(this)
   }
@@ -27,6 +30,10 @@ export class Context
 
   @lazy get mentoringService(): MentoringService {
     return new MentoringService(this)
+  }
+
+  @lazy get feedService(): FeedService {
+    return new FeedService(this)
   }
 
   public currentUser: UserInfo

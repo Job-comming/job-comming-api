@@ -1,18 +1,20 @@
-import { Sequelize, Model, DataTypes } from 'sequelize'
+import { Sequelize, Model, DataTypes, BelongsTo } from 'sequelize'
+import { UserInfoModel } from './UserInfo.model'
 
-export class PostModel extends Model {
+export class FeedModel extends Model {
   public id: number
   public writerID: number
-  public title: string
-  public option: number
   public content: string
-  public category: string
+  public type: number
+  public tag: string
   public createdAt: Date
   public updatedAt: Date
+
+  static UserInfoModel: BelongsTo<FeedModel, UserInfoModel>
 }
 
 export function init(sequelize: Sequelize) {
-  PostModel.init(
+  FeedModel.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -29,19 +31,16 @@ export function init(sequelize: Sequelize) {
         allowNull: false,
         field: 'writer_id',
       },
-      title: {
-        type: DataTypes.STRING,
-      },
-      option: {
-        type: DataTypes.TINYINT,
-        allowNull: false,
-      },
       content: {
         type: DataTypes.TEXT,
+        defaultValue: '',
+      },
+      type: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
-      category: {
-        type: DataTypes.STRING,
+      tag: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       createdAt: {
@@ -55,11 +54,15 @@ export function init(sequelize: Sequelize) {
     },
     {
       sequelize,
-      tableName: 'post',
+      tableName: 'feed',
       createdAt: 'created_at',
       updatedAt: 'updated_at',
     },
   )
 }
 
-export function associate() {}
+export function associate() {
+  FeedModel.UserInfoModel = FeedModel.belongsTo(UserInfoModel, {
+    foreignKey: 'writerID',
+  })
+}

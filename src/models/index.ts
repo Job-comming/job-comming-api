@@ -12,8 +12,8 @@ import {
   associate as associateUserInfoModel,
 } from './UserInfo.model'
 
-export { PostModel } from './Post.model'
-import { init as initPostModel, associate as associatePostModel } from './Post.model'
+export { FeedModel } from './Feed.model'
+import { init as initFeedModel, associate as associateFeedModel } from './Feed.model'
 
 export { MentoringModel } from './Mentoring.model'
 import {
@@ -26,12 +26,12 @@ export async function init(options: Options) {
 
   initAuthUserInfoModel(sequelize)
   initUserInfoModel(sequelize)
-  initPostModel(sequelize)
+  initFeedModel(sequelize)
   initMentoringModel(sequelize)
 
   associateAuthUserInfoModel()
   associateUserInfoModel()
-  associatePostModel()
+  associateFeedModel()
   associateMentoringModel()
 
   return sequelize

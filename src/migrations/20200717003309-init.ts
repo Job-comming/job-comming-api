@@ -57,9 +57,35 @@ export default {
         email: {
           type: DataTypes.STRING(254),
         },
+        state: {
+          type: DataTypes.STRING(20),
+          allowNull: false,
+        },
+        interest: {
+          type: DataTypes.TEXT,
+        },
+        level: {
+          type: DataTypes.STRING(20),
+        },
         reputation: {
           type: DataTypes.INTEGER,
           allowNull: false,
+        },
+        deposit: {
+          type: DataTypes.INTEGER,
+          defaultValue: 0,
+        },
+        menteeCount: {
+          type: DataTypes.INTEGER,
+          defaultValue: 0,
+        },
+        mentoCount: {
+          type: DataTypes.INTEGER,
+          defaultValue: 0,
+        },
+        githubURL: {
+          type: DataTypes.TEXT,
+          defaultValue: '',
         },
         createdAt: {
           type: DataTypes.DATE,
@@ -74,7 +100,7 @@ export default {
     )
 
     await queryInterface.createTable(
-      'post',
+      'feed',
       {
         id: {
           type: DataTypes.INTEGER,
@@ -91,19 +117,16 @@ export default {
           allowNull: false,
           field: 'writer_id',
         },
-        title: {
-          type: DataTypes.STRING,
-        },
-        option: {
-          type: DataTypes.TINYINT,
-          allowNull: false,
-        },
         content: {
           type: DataTypes.TEXT,
+          defaultValue: '',
+        },
+        type: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
-        category: {
-          type: DataTypes.STRING,
+        tag: {
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         createdAt: {
@@ -113,6 +136,10 @@ export default {
         updatedAt: {
           type: DataTypes.DATE,
           field: 'updated_at',
+        },
+        deletedAt: {
+          type: DataTypes.DATE,
+          field: 'deleted_At',
         },
       },
       { transaction },

@@ -5,7 +5,14 @@ export class UserInfoModel extends Model {
   public authUserID: number
   public username: string
   public email: string
+  public state: string
+  public interest: string
+  public level: string
   public reputation: number
+  public deposit: number
+  public menteeCount: number
+  public mentoCount: number
+  public githubURL: number
   public createdAt: Date
   public updatedAt: Date
 }
@@ -35,9 +42,35 @@ export function init(sequelize: Sequelize) {
       email: {
         type: DataTypes.STRING(254),
       },
+      state: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
+      interest: {
+        type: DataTypes.TEXT,
+      },
+      level: {
+        type: DataTypes.STRING(20),
+      },
       reputation: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      deposit: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      menteeCount: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      mentoCount: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      githubURL: {
+        type: DataTypes.TEXT,
+        defaultValue: '',
       },
       createdAt: {
         type: DataTypes.DATE,
