@@ -1,6 +1,6 @@
-export interface Pagination {
+export interface CursorPagination {
   currentCursor: number
-  limit: number
+  pageSize: number
 }
 
 export enum OrderDirection {
@@ -20,4 +20,10 @@ export enum FeedType {
 export enum UserState {
   PENDING = 'PENDING',
   COMPLETE = 'COMPLETE',
+}
+
+export enum UserLevel {
+  NEWBIE = 'NEWBIE',
+  JUNIOR = 'JUNIOR',
+  SENIOR = 'SENIOR',
 }

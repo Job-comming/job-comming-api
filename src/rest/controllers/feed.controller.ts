@@ -4,8 +4,8 @@ export const getFeeds: Handler = async (req, res) => {
   const { feedService } = req.context
   const { currentCursor, pageSize } = req.query
   const feeds = await feedService.getFeeds({
-    currentCursor: Number(currentCursor),
-    pageSize: Number(pageSize),
+    currentCursor: Number(currentCursor ?? 0),
+    pageSize: Number(pageSize ?? 10),
   })
   console.log(feeds)
   res.send(feeds)

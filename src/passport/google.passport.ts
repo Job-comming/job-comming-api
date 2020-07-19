@@ -12,7 +12,7 @@ import {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
 } from '../config'
-import { NormalizedProfile, verifyCallback } from './base.passport'
+import { NormalizedProfile, verifyCallback, oauthCallback } from './base.passport'
 import { Provider } from '../types'
 
 type GoogleVerifyFunction = (
@@ -65,12 +65,15 @@ export function createRouter(passport: passport.Authenticator) {
     })(req, res, next)
   })
 
-  router.get(
-    '/auth/google/callback',
-    passport.authenticate('google', {
-      successRedirect: `${CLIENT_BASE_URL}`,
-    }),
-  )
+  router.get('/auth/google/callback', (req, res, next) => {
+    passport.authenticate(
+      'google',
+      {
+        failureRedirect: `${CLIENT_BASE_URL}/login`,
+      },
+      (err, user) => oauthCallback(err, user)(req, res, next),
+    )(req, res, next)
+  })
 
   return router
 }

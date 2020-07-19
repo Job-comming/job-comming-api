@@ -48,7 +48,6 @@ export class FeedService {
       },
       order: [['createdAt', 'DESC']],
       limit: pageSize,
-      logging: console.log,
     })
 
     const feeds = models.map((model) => this.buildFeed(model))

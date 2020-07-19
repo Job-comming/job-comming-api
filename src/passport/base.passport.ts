@@ -1,6 +1,8 @@
+import ehr from 'express-handle-rejection'
 import { Context } from '../context'
 import { AuthUser } from '../services/auth-user.service'
 import { Provider, UserState } from '../types'
+import { CLIENT_BASE_URL } from '../config'
 
 export interface NormalizedProfile {
   serviceUserID: string
@@ -21,11 +23,23 @@ async function verify(
   )
 
   if (authUser) {
-    // const user = await userService.getUser(oauthUser.userID)
     return authUser
   }
 
   return null
+}
+
+export function oauthCallback(error: Error, user: any) {
+  return ehr(async (req, res) => {
+    const { userInfoService } = req.context
+    const userInfo = await userInfoService.getUserInfoByAuthUserID(user.id)
+
+    if (userInfo.state === UserState.PENDING) {
+      return res.redirect(`${CLIENT_BASE_URL}/sign-up`)
+    }
+
+    return res.redirect(CLIENT_BASE_URL)
+  })
 }
 
 export async function verifyCallback(
@@ -54,9 +68,9 @@ export async function verifyCallback(
     await userInfoService.createUserInfo({
       authUserID: authUser.id,
       username,
-      email,
       state: UserState.PENDING,
       reputation: 0,
+      email,
     })
 
     return callback(null, authUser)

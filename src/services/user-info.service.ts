@@ -1,6 +1,6 @@
 import { UserInfoModel } from '../models'
 import { MentoringService } from './mentoring.service'
-import { UserState } from '../types'
+import { UserState, UserLevel } from '../types'
 
 export interface UserInfoServiceDependencies {
   mentoringService: MentoringService
@@ -23,8 +23,31 @@ export class UserInfoService {
     return this.buildUserInfo(model)
   }
 
+  public async getUserInfoByAuthUserID(authUserID: number) {
+    if (!authUserID) {
+      return null
+    }
+
+    const model = await UserInfoModel.findOne({
+      where: {
+        authUserID,
+      },
+    })
+
+    return this.buildUserInfo(model)
+  }
+
   public async createUserInfo(input: UserInfoCreateInput) {
     const model = await UserInfoModel.create(input)
+    return this.buildUserInfo(model)
+  }
+
+  public async updateUserInfo(id: number, input: UserInfoUpdateInput) {
+    const model = await UserInfoModel.findByPk(id)
+
+    Object.assign(model, input)
+    await model.save()
+
     return this.buildUserInfo(model)
   }
 
@@ -113,7 +136,19 @@ export class UserInfo {
 export interface UserInfoCreateInput {
   authUserID: number
   username: string
-  email: string
   state: UserState
   reputation: number
+  email?: string
+  interest?: string
+  level?: UserLevel
+  deposit?: number
+  githubURL?: string
+}
+
+export interface UserInfoUpdateInput {
+  reputation?: number
+  interest?: string
+  level?: UserLevel
+  deposit?: number
+  githubURL?: string
 }
