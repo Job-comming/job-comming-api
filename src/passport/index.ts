@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import passport, { Passport } from 'passport'
-import { UserModel } from '../models'
+import { AuthUserModel } from '../models'
 import {
   strategy as googleStrategy,
   createRouter as createGoogleRouter,
@@ -9,13 +9,13 @@ import {
 export const initializePassport = () => {
   const passport = new Passport()
 
-  passport.serializeUser<UserModel, number>((user, callback) => {
+  passport.serializeUser<AuthUserModel, number>((user, callback) => {
     callback(null, user.id)
   })
 
-  passport.deserializeUser<UserModel | null, number>(async (id, callback) => {
+  passport.deserializeUser<AuthUserModel | null, number>(async (id, callback) => {
     try {
-      const user = await UserModel.findOne({
+      const user = await AuthUserModel.findOne({
         where: { id },
       })
       callback(null, user)

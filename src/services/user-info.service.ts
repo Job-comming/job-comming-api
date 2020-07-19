@@ -1,45 +1,49 @@
-import { UserModel } from '../models'
+import { UserInfoModel } from '../models'
 import { MentoringService } from './mentoring.service'
 
-export interface UserServiceDependencies {
+export interface UserInfoServiceDependencies {
   mentoringService: MentoringService
 }
 
-export class UserService {
-  constructor(private dependencies: UserServiceDependencies) {}
+export class UserInfoService {
+  constructor(private dependencies: UserInfoServiceDependencies) {}
 
-  public async getUser(id: number) {
+  public async getUserInfo(id: number) {
     if (!id) {
       return null
     }
 
-    const model = await UserModel.findByPk(id)
+    const model = await UserInfoModel.findByPk(id)
 
     if (!model) {
       return null
     }
 
-    return this.buildUser(model)
+    return this.buildUserInfo(model)
   }
 
-  public async createUser(input: UserCreateInput) {
-    const model = await UserModel.create(input)
-    return this.buildUser(model)
+  public async createUserInfo(input: UserInfoCreateInput) {
+    const model = await UserInfoModel.create(input)
+    return this.buildUserInfo(model)
   }
 
-  public buildUser(model: UserModel) {
-    return new User(model, this.dependencies)
+  public buildUserInfo(model: UserInfoModel) {
+    return new UserInfo(model, this.dependencies)
   }
 }
 
-export class User {
+export class UserInfo {
   constructor(
-    private model: UserModel,
-    private dependencies: UserServiceDependencies,
+    private model: UserInfoModel,
+    private dependencies: UserInfoServiceDependencies,
   ) {}
 
   get id() {
     return this.model.id
+  }
+
+  get authUserID() {
+    return this.model.authUserID
   }
 
   get username() {
@@ -77,7 +81,8 @@ export class User {
   }
 }
 
-export interface UserCreateInput {
+export interface UserInfoCreateInput {
+  authUserID: number
   username: string
   email: string
   reputation: number

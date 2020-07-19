@@ -1,36 +1,29 @@
 import { Sequelize, Model, DataTypes } from 'sequelize'
-import { Provider } from '../types'
 
-export class OAuthModel extends Model {
+export class AuthUserModel extends Model {
   public id: number
-  public service: Provider
-  public serviceUserID: string
-  public userID: number
+  public authUserID: string
+  public service: string
   public createdAt: Date
   public updatedAt: Date
 }
 
 export function init(sequelize: Sequelize) {
-  OAuthModel.init(
+  AuthUserModel.init(
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
+      authUserID: {
+        type: DataTypes.STRING(64),
+        allowNull: false,
+        field: 'auth_user_id',
+      },
       service: {
         type: DataTypes.STRING(12),
         allowNull: false,
-      },
-      serviceUserID: {
-        type: DataTypes.STRING(64),
-        allowNull: false,
-        field: 'service_user_id',
-      },
-      userID: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        field: 'user_id',
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -43,7 +36,7 @@ export function init(sequelize: Sequelize) {
     },
     {
       sequelize,
-      tableName: 'oauth',
+      tableName: 'auth_user',
       createdAt: 'created_at',
       updatedAt: 'updated_at',
     },

@@ -1,7 +1,8 @@
 import { Sequelize, Model, DataTypes } from 'sequelize'
 
-export class UserModel extends Model {
+export class UserInfoModel extends Model {
   public id: number
+  public authUserID: number
   public username: string
   public email: string
   public reputation: number
@@ -10,12 +11,22 @@ export class UserModel extends Model {
 }
 
 export function init(sequelize: Sequelize) {
-  UserModel.init(
+  UserInfoModel.init(
     {
       id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true,
+      },
+      authUserID: {
+        type: DataTypes.INTEGER,
+        onDelete: 'cascade',
+        references: {
+          model: 'auth_user',
+          key: 'id',
+        },
+        allowNull: false,
+        field: 'auth_user_id',
       },
       username: {
         type: DataTypes.STRING(32),
@@ -39,7 +50,7 @@ export function init(sequelize: Sequelize) {
     },
     {
       sequelize,
-      tableName: 'user',
+      tableName: 'user_info',
       createdAt: 'created_at',
       updatedAt: 'updated_at',
     },

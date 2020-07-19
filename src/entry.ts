@@ -1,4 +1,5 @@
 import express from 'express'
+import compression from 'compression'
 import ehr from 'express-handle-rejection'
 import cors from 'cors'
 import bodyParser from 'body-parser'
@@ -17,14 +18,14 @@ import {
   MYSQL_PORT,
 } from './config'
 import { init as initModels } from './models'
-import { getUserFromSession } from './auth'
+import { getUserInfoFromSession } from './auth'
 import { router } from './rest'
 import { Context } from './context'
-import { User } from './services/user.service'
+import { UserInfo } from './services/user-info.service'
 
 declare module 'express' {
   export interface Request {
-    user: User
+    user: UserInfo
   }
 }
 
@@ -39,41 +40,42 @@ async function init() {
     logging: false,
   })
 
-  const SessionStore = new MySQLStore(session)
-  const MySQLOption = {
-    host: MYSQL_HOST,
-    user: MYSQL_USERNAME,
-    password: MYSQL_PASSWORD,
-    database: MYSQL_DATABASE,
-    port: MYSQL_PORT,
-  }
-
-  const passport = initializePassport()
-  const passportRouter = createPassportRouter(passport)
-
   const app = express()
+
+  app.use(compression())
+  app.use(cookieParser())
+  app.use(cookieParser())
 
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
-  app.use(cookieParser())
+  app.use(cors({ origin: true, credentials: true }))
+
+  const SessionStore = new MySQLStore(session)
   app.use(
     session({
-      store: new SessionStore(MySQLOption),
+      store: new SessionStore({
+        host: MYSQL_HOST,
+        user: MYSQL_USERNAME,
+        password: MYSQL_PASSWORD,
+        database: MYSQL_DATABASE,
+        port: MYSQL_PORT,
+      }),
       secret: COOKIE_SECRET,
       resave: false,
+      saveUninitialized: false,
       cookie: {
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-        domain: DOMAIN,
       },
-      saveUninitialized: false,
     }),
   )
+
+  const passport = initializePassport()
   app.use(passport.initialize())
   app.use(passport.session())
 
   app.use(
     ehr(async (req, res, next) => {
-      const userModel = await getUserFromSession(req.session)
+      const userModel = await getUserInfoFromSession(req.session)
 
       // eslint-disable-next-line require-atomic-updates
       req.context = new Context(sequelize, req, res, userModel)
@@ -81,10 +83,8 @@ async function init() {
     }),
   )
 
-  app.use(cors({ origin: true, credentials: true }))
-
   app.use(router)
-  app.use(passportRouter)
+  app.use(createPassportRouter(passport))
 
   app.listen(PORT, () => {
     console.log(`\n😻 Listening at http://localhost:${PORT}\n`)

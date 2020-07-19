@@ -1,13 +1,16 @@
 import { Sequelize, Options, Model } from 'sequelize'
 
-export { UserModel } from './User.model'
-import { init as initUserModel, associate as associateUserModel } from './User.model'
-
-export { OAuthModel } from './OAuth.model'
+export { AuthUserModel } from './AuthUser.model'
 import {
-  init as initOAuthModel,
-  associate as associateOAuthModel,
-} from './OAuth.model'
+  init as initAuthUserInfoModel,
+  associate as associateAuthUserInfoModel,
+} from './AuthUser.model'
+
+export { UserInfoModel } from './UserInfo.model'
+import {
+  init as initUserInfoModel,
+  associate as associateUserInfoModel,
+} from './UserInfo.model'
 
 export { PostModel } from './Post.model'
 import { init as initPostModel, associate as associatePostModel } from './Post.model'
@@ -21,15 +24,15 @@ import {
 export async function init(options: Options) {
   const sequelize = new Sequelize(options)
 
-  initUserModel(sequelize)
+  initAuthUserInfoModel(sequelize)
+  initUserInfoModel(sequelize)
   initPostModel(sequelize)
   initMentoringModel(sequelize)
-  initOAuthModel(sequelize)
 
-  associateUserModel()
+  associateAuthUserInfoModel()
+  associateUserInfoModel()
   associatePostModel()
   associateMentoringModel()
-  associateOAuthModel()
 
   return sequelize
 }

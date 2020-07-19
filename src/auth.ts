@@ -1,9 +1,10 @@
-import { UserModel } from './models'
+import { UserInfoModel } from './models'
 
-export async function getUserFromSession(session: Express.Session) {
-  if (!session?.userID) {
+export async function getUserInfoFromSession(session: Express.Session) {
+  const userID = session?.passport?.user
+  if (!userID) {
     return null
   }
 
-  return await UserModel.findByPk(session.userID)
+  return await UserInfoModel.findByPk(userID)
 }

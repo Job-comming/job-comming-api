@@ -1,5 +1,5 @@
 import { Context } from '../context'
-import { User } from '../services/user.service'
+import { AuthUser } from '../services/auth-user.service'
 import { Provider } from '../types'
 
 export interface NormalizedProfile {
@@ -12,14 +12,17 @@ async function verify(
   context: Context,
   provider: Provider,
   profile: NormalizedProfile,
-): Promise<User | null> {
-  const { userService, oauthService } = context
+): Promise<AuthUser | null> {
+  const { authUserService } = context
 
-  const oauthUser = await oauthService.getOAuth(profile.serviceUserID, provider)
+  const authUser = await authUserService.getAuthUserByAuthUserIDAndService(
+    profile.serviceUserID,
+    provider,
+  )
 
-  if (oauthUser) {
-    const user = await userService.getUser(oauthUser.userID)
-    return user
+  if (authUser) {
+    // const user = await userService.getUser(oauthUser.userID)
+    return authUser
   }
 
   return null
@@ -30,32 +33,32 @@ export async function verifyCallback(
   accessToken: string,
   refreshToken: string,
   profile: NormalizedProfile,
-  callback: (error: any, user: User | null) => any,
+  callback: (error: any, user: AuthUser | null) => any,
   provider: Provider,
 ) {
   try {
-    let user = await verify(context, provider, profile)
+    let authUser = await verify(context, provider, profile)
 
-    if (user) {
-      return callback(null, user)
+    if (authUser) {
+      return callback(null, authUser)
     }
 
-    const { userService, oauthService } = context
+    const { authUserService, userInfoService } = context
     const { serviceUserID, username, email } = profile
 
-    user = await userService.createUser({
+    authUser = await authUserService.createAuthUser({
+      authUserID: serviceUserID,
+      service: provider,
+    })
+
+    await userInfoService.createUserInfo({
+      authUserID: authUser.id,
       username,
       email,
       reputation: 0,
     })
 
-    await oauthService.createOAuth({
-      service: provider,
-      serviceUserID,
-      userID: user.id,
-    })
-
-    return callback(null, user)
+    return callback(null, authUser)
   } catch (error) {
     return callback(error, null)
   }
